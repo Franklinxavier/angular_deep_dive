@@ -1,20 +1,23 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { Course } from "../model/course";
 
 @Component({
   selector: "course-card",
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: "./course-card.component.html",
-  styleUrls: ["./course-card.component.css"],
+  styleUrl: "./course-card.component.css",
 })
 export class CourseCardComponent {
   @Input({ required: true })
   course: Course;
 
-  @Output()
-  courseSelected = new EventEmitter<Course>();
+  @Output("courseSelected")
+  courseEmitter = new EventEmitter<Course>();
 
   onCourseViewed() {
-    console.log("Log from child element!");
-    this.courseSelected.emit(this.course);
+    console.log("Event in course card component - CHILD");
+    this.courseEmitter.emit(this.course);
   }
 }
